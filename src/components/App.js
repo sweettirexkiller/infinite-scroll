@@ -5,17 +5,38 @@ import './App.css';
 
 class App extends Component {
 
+    componentDidMount() {
+        window.addEventListener('scroll', this.onScroll, false);
+    }
+
+
     componentWillMount() {
         this.props.fetchPhotos();
     }
 
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll',this.onScroll, false);
+    }
+
+    onScroll = () => {
+        if(
+            (window.innerHeight + window.scrollY)  >= (document.body.offsetHeight - 500)
+            && this.props.images.length
+            && !this.props.fetching
+        ){
+            this.props.fetchPhotos();
+        }
+    };
+
+
     renderPhotos() {
-        if (this.props.photos.fetching && !this.props.photos.images.length) {
+        if (this.props.fetching && !this.props.images.length) {
             return (
                 <p>Fetching...</p>
             );
-        } else if (this.props.photos.fetched) {
-            const imagesList = this.props.photos.images.photo.map(({id, secret, farm, server, title}) => {
+        } else if (this.props.fetched) {
+            const imagesList = this.props.images.map(({id, secret, farm, server, title}) => {
                 let url = `https://farm${farm}.staticflickr.com/${server}/${id}_${secret}_m.jpg`;
                 return (<img key={id} src={url} alt={title}/>);
             });
@@ -41,7 +62,11 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-    return {photos: state.photosFetch}
+    return {
+        images: state.photosFetch.images,
+        fetching: state.photosFetch.fetching,
+        fetched: state.photosFetch.fetched
+    }
 }
 
 export default connect(mapStateToProps, actions)(App);
