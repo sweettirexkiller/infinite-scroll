@@ -1,7 +1,9 @@
 import {combineReducers} from 'redux';
 import photosReducer from './photosReducer'
+import authorReducer from './authorReducer'
 
 
 export default combineReducers({
-    photosFetch: photosReducer
+    photosFetch: photosReducer,
+    author: authorReducer
 })

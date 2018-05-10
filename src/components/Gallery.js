@@ -37,7 +37,7 @@ class Gallery extends Component {
         return (
             <div>
                 <div>
-                    {this.props.error ? <Error/> : <PhotoList images={this.props.images}/>}
+                    {this.props.error ? <Error message="An error occurred, we are sorry."/> : <PhotoList images={this.props.images}/>}
                 </div>
                 {this.props.fetching && <Loader/>}
             </div>
