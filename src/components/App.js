@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import * as actions from '../actions';
 
 class App extends Component {
-  render() {
+
+    componentDidMount() {
+        this.props.fetchPhotos();
+    }
+
+    render() {
     return (
       <div>
         Hello
@@ -10,4 +17,8 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(state){
+  return {photos: state.photos}
+}
+
+export default connect(mapStateToProps,actions)(App);
