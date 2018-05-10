@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import * as actions from '../actions';
+import './App.css';
 
 class App extends Component {
 
@@ -15,12 +16,12 @@ class App extends Component {
             );
         } else if (this.props.photos.fetched) {
             const imagesList = this.props.photos.images.photo.map(({id, secret, farm, server, title}) => {
-                let url = `https://farm${farm}.staticflickr.com/${server}/${id}_${secret}.jpg`;
+                let url = `https://farm${farm}.staticflickr.com/${server}/${id}_${secret}_m.jpg`;
                 return (<img key={id} src={url} alt={title}/>);
             });
 
             return (
-                <div>
+                <div className="cards">
                     {imagesList}
                 </div>
             )
@@ -30,7 +31,7 @@ class App extends Component {
     render() {
         return (
             <div>
-                <h1>Photos:</h1>
+                <h1>Photos of Dogos:</h1>
                 <div>
                     {this.renderPhotos()}
                 </div>
